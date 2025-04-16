@@ -29,9 +29,9 @@ const LoginPage = () => {
                 {isLogin ? (
                     <Stack spacing={4}>
                         Email or username
-                        <Input placeholder="Enter your email or username"/>
+                        <Input/>
                         Password
-                        <Input placeholder="Enter password" type="password"/>
+                        <Input type="password"/>
                         <Button>Login</Button>
                         Don't have an account?
                         <Button variant="link" onClick={toggleForm}>Register</Button>
@@ -39,15 +39,16 @@ const LoginPage = () => {
                 ) : (
                     <Stack spacing={4}>
                         First Name
-                        <Input placeholder="Enter your first name"/>
+                        <Input/>
                         Last Name
-                        <Input placeholder="Enter your last name"/>
+                        <Input/>
                         Email
-                        <Input placeholder="Enter your email"/>
+                        <Input/>
                         Username
-                        <Input placeholder="Enter your username"/>
+                        <Input/>
                         Password
-                        <Input placeholder="Enter password" type="password"/>
+                        <Input type="password"/>
+                        <Button>Register</Button>
                         Already have an account?
                         <Button variant="link" onClick={toggleForm}>Login</Button>
                     </Stack>
