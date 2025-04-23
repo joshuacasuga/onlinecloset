@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 import User from "../models/user.model.js";
+import cors from "cors";
+import express from "express";
+
+const app = express();
 
 export const getAllUsers = async (req, res) => {
     try {

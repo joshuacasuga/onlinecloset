@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from "axios"
 
-const LoginPage = () => {
+const RegisterPage = () => {
     //const [firstName, setFirstName] = useState("");
     //const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ const LoginPage = () => {
       e.preventDefault();
 
       try {
-        await axios.post("http://localhost:5173/", {
+        await axios.post("http://localhost:5173/register", {
           email, password
         });
       } catch(e) {
@@ -23,8 +23,8 @@ const LoginPage = () => {
   
 
   return (
-    <div className='login'>
-      <h1>Login</h1>
+    <div className='register'>
+      <h1>Register</h1>
 
       <form action="POST">
         <input type="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder='Email'/>
@@ -33,12 +33,12 @@ const LoginPage = () => {
       </form>
 
       <br/>
-      <p>Don't have an account?</p>
+      <p>Already have an account?</p>
       <br/>
 
-      <Link to="/register">Register</Link>
+      <Link to="/">Login</Link>
     </div>
   )
 }
 
-export default LoginPage
+export default RegisterPage
