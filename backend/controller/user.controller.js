@@ -30,8 +30,18 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
     const user = req.body; // user will send this data
 
-    if(!user.firstName || !user.lastName || !user.email || !user.phoneNum) {
+    if(!user.firstName || !user.lastName || !user.email || !user.username || !user.password) {
         return res.status(400).json({ success:false, message: "Please provide all fields" });
+    }
+
+    if(User.find({email: user.email})) {
+        console.log(`Email ${user.email} already registered.`);
+        return res.status(501).json({ success:false, message: "Email already registered" });
+    }
+
+    if(User.find({username: user.username})) {
+        console.log(`Username ${user.username} already taken.`);
+        return res.status(501).json({ success:false, message: "Username already taken" });
     }
 
     const newUser = new User(user)
