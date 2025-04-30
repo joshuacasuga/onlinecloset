@@ -34,20 +34,23 @@ export const createUser = async (req, res) => {
         return res.status(400).json({ success:false, message: "Please provide all fields" });
     }
 
-    if(User.find({email: user.email})) {
-        console.log(`Email ${user.email} already registered.`);
-        return res.status(501).json({ success:false, message: "Email already registered" });
-    }
-
-    if(User.find({username: user.username})) {
-        console.log(`Username ${user.username} already taken.`);
-        return res.status(501).json({ success:false, message: "Username already taken" });
-    }
-
-    const newUser = new User(user)
-
     try {
+        const existingEmail = await User.findOne({email: user.email});
+        if (existingEmail) {
+            console.log(`Email ${user.email} already registered.`);
+            return res.status(409).json({ success:false, message: "Email already registered" });
+        }
+
+        const existingUsername = await User.findOne({username: user.username});
+        if (existingUsername) {
+            console.log(`Username ${user.username} already taken.`);
+            return res.status(409).json({ success:false, message: "Username already taken" });
+        }
+
+        const newUser = new User(user)
+
         await newUser.save();
+        console.log(`${newUser.username} successfully registered!`);
         res.status(201).json({ success:true, data: newUser });
     } catch(error) {
         console.error("Error in Create user:", error.message);
@@ -85,3 +88,14 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error"});
     }
 };
+
+export const loginUser = async (req, res) => {
+    const { id } = req.params;
+    const user = req.body;
+
+    try{
+        // implement user login
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error. Could not log in." });
+    }
+}

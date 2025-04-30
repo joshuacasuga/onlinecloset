@@ -8,9 +8,9 @@ import RegisterPage from './pages/RegisterPage.jsx';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LoginPage/>} />
+      <Route path="/" element={<HomePage/>} />
       <Route path="/register" element={<RegisterPage/>} />
-      <Route path="/home" element={<HomePage/>} />
+      <Route path="/login" element={<LoginPage/>} />
     </Routes>
   );
 }

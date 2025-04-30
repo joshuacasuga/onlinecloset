@@ -57,7 +57,7 @@ const RegisterPage = () => {
       <p>Already have an account?</p>
       <br/>
 
-      <Link to="/">Login</Link>
+      <Link to="/login">Login</Link>
     </div>
   )
 }

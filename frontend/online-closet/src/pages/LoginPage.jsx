@@ -13,7 +13,7 @@ const LoginPage = () => {
       e.preventDefault();
 
       try {
-        await axios.post("http://localhost:5173/", {
+        await axios.post("http://localhost:5173/login", {
           email, password
         });
       } catch(e) {

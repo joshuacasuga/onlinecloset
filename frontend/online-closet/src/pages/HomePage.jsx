@@ -1,12 +1,14 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const HomePage = () => {
-  const location=useLocation()
+  //const location=useLocation()
 
   return (
     <div className='home'>
-      <h1>Hello {location.state.id}, welcome to your Online Closet</h1>
+      <Link to="/register">Register</Link>
+      <br/>
+      <Link to="/login">Login</Link>
     </div>
   )
 }
