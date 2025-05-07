@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from "../models/user.model.js";
 import cors from "cors";
 import express from "express";
+import bcrypt from "bcrypt";
 
 const app = express();
 
@@ -35,19 +36,22 @@ export const createUser = async (req, res) => {
     }
 
     try {
-        const existingEmail = await User.findOne({email: user.email});
-        if (existingEmail) {
+        const isEmailValid = await User.findOne({email: user.email});
+        if (isEmailValid) {
             console.log(`Email ${user.email} already registered.`);
             return res.status(409).json({ success:false, message: "Email already registered" });
         }
 
-        const existingUsername = await User.findOne({username: user.username});
-        if (existingUsername) {
+        const isUsernameValid = await User.findOne({username: user.username});
+        if (isUsernameValid) {
             console.log(`Username ${user.username} already taken.`);
             return res.status(409).json({ success:false, message: "Username already taken" });
         }
 
-        const newUser = new User(user)
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        user.password = hashedPassword;
+
+        const newUser = new User(user);
 
         await newUser.save();
         console.log(`${newUser.username} successfully registered!`);
@@ -90,12 +94,22 @@ export const deleteUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-    const { id } = req.params;
+    // const { id } = req.params;
     const user = req.body;
 
     try{
-        // implement user login
+        const existingUser = await User.findOne({ email: user.email });
+        if (!existingUser) {
+            return res.status(401).json("Email not found.");
+        }
+
+        const isPasswordValid = await bcrypt.compare(user.password, existingUser.password);
+        if (!isPasswordValid) {
+            return res.status(401).json("Incorrect password");
+        }
+
+        res.status(200).json(`${existingUser.username} successfully logged in.`);
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error. Could not log in." });
-    }
+    } 
 }
